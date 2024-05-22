@@ -5,6 +5,7 @@ import axios from "axios";
 const Hospitals = () => {
   const navigate = useNavigate();
   const [hospitals, setHospitals] = useState([]);
+  const [avgrating, setAvgrating] = useState();
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -26,6 +27,7 @@ const Hospitals = () => {
       const response = await axios.get(
         `http://localhost:8000/api/get-hospital-info/${hospitalId}`
       );
+      console.log(response.data.hospitals);
       navigate("/dashboard/hospital-info", {
         state: response.data.hospitals[0],
       });
@@ -45,6 +47,7 @@ const Hospitals = () => {
             <div className="w-1/5 font-bold">Name</div>
             <div className="w-1/5 font-bold">Address</div>
             <div className="w-1/5 font-bold">Waiting Time</div>
+            <div className="w-1/5 font-bold">Rating</div>
             <div className="w-1/5 font-bold">Details</div>
           </div>
           {hospitals.length > 0 ? (
@@ -58,6 +61,7 @@ const Hospitals = () => {
                 <div className="w-1/5 px-2">
                   {hospital.estimated_waiting_time}
                 </div>
+                <div className="w-1/5 px-2">{hospital.average_rating}</div>
                 <div className="w-1/5 px-2">
                   <NavLink
                     className="p-1 px-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
@@ -74,7 +78,7 @@ const Hospitals = () => {
             </div>
           )}
         </div>
-        {error && <div className="text-red-600 text-center mt-4">{error}</div>}
+        {/* {error && <div className="text-red-600 text-center mt-4">{error}</div>} */}
       </div>
     </div>
   );

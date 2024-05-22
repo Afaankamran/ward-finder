@@ -5,6 +5,7 @@ import axios from "axios";
 const HospitalInfo = () => {
   const location = useLocation();
   const hospital = location.state;
+  const [hospitalLocation, setHospitalLocation] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [feedbacks, setFeedbacks] = useState([]);
   const [rating, setRating] = useState("");
@@ -30,8 +31,9 @@ const HospitalInfo = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const userID = localStorage.getItem("userid");
       await axios.post(
-        `http://localhost:8000/api/hospital-review/${hospital.hospital_id}`,
+        `http://localhost:8000/api/hospital-review/${userID}/${hospital.hospital_id}`,
         {
           rating: formRating,
           hospital_feedback: formFeedback,
@@ -51,6 +53,20 @@ const HospitalInfo = () => {
       setError(err.message);
     }
   };
+  const fetchHospitalInfo = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/get-hospital-info/${hospital.hospital_id}`
+      );
+      setHospitalLocation(response.data.hospitals[0].hospital_link);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchHospitalInfo();
+  }, []);
 
   return (
     <>
@@ -96,6 +112,14 @@ const HospitalInfo = () => {
                 >
                   Leave Feedback
                 </button>
+                <a
+                  href={hospitalLocation}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white hover:bg-red-700 text-md font-bold bg-red-600 p-2 px-3 rounded-lg mr-4"
+                >
+                  Visit Hospital
+                </a>
                 <NavLink
                   className="text-white hover:bg-red-700 text-md font-bold bg-red-600 p-2 px-3 rounded-lg"
                   to="/dashboard/hospitals"

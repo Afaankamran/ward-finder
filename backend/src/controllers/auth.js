@@ -88,18 +88,13 @@ exports.hospital = async (req, res) => {
   const {
     hospital_name,
     hospital_location,
-    hospital_rating,
+    hospital_link,
     estimated_waiting_time,
   } = req.body;
   try {
     await db.query(
-      "INSERT INTO hospitals (hospital_name, hospital_location, hospital_rating, estimated_waiting_time) VALUES ($1, $2 , $3, $4)",
-      [
-        hospital_name,
-        hospital_location,
-        hospital_rating,
-        estimated_waiting_time,
-      ]
+      "INSERT INTO hospitals (hospital_name, hospital_location, hospital_link, estimated_waiting_time) VALUES ($1, $2 , $3, $4)",
+      [hospital_name, hospital_location, hospital_link, estimated_waiting_time]
     );
     return res.status(201).json({
       success: true,
@@ -142,13 +137,14 @@ exports.gethospitalsbyid = async (req, res) => {
 };
 
 exports.addUserTreatmentPlan = async (req, res) => {
-  const { userId, medicine_name, medicine_quantity, medicine_time } = req.body;
+  const { userId, medicine_name, medicine_quantity, medicine_time, notes } =
+    req.body;
   try {
     const result = await db.query(
-      `INSERT INTO treatmentplan (user_id, medicine_name, medicine_quantity, medicine_time) 
-       VALUES ($1, $2, $3, $4) 
+      `INSERT INTO treatmentplan (user_id, medicine_name, medicine_quantity, medicine_time, notes) 
+       VALUES ($1, $2, $3, $4, $5) 
        RETURNING *`,
-      [userId, medicine_name, medicine_quantity, medicine_time]
+      [userId, medicine_name, medicine_quantity, medicine_time, notes]
     );
     const newItem = result.rows[0];
     return res.status(201).json({
@@ -205,13 +201,14 @@ exports.deleteUserTreatmentPlan = async (req, res) => {
 
 exports.addreviews = async (req, res) => {
   const hospital_id = req.params.hospital_id;
+  const user_id = req.params.user_id;
   const { rating, hospital_feedback } = req.body;
   try {
     const result = await db.query(
-      `INSERT INTO reviews (hospital_id, rating, hospital_feedback) 
-       VALUES ($1, $2, $3) 
+      `INSERT INTO reviews (user_id, hospital_id, rating, hospital_feedback) 
+       VALUES ($1, $2, $3, $4) 
        RETURNING *`,
-      [hospital_id, rating, hospital_feedback]
+      [user_id, hospital_id, rating, hospital_feedback]
     );
     const newItem = result.rows[0];
     return res.status(200).json({

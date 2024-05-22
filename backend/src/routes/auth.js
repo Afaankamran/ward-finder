@@ -14,6 +14,8 @@ const {
   gethospitalsbyid,
   addreviews,
   getaveragerating,
+  getHospitalRating,
+  addHospitalRating,
 } = require("../controllers/auth");
 
 const {
@@ -35,7 +37,7 @@ router.post("/treatmentplan", addUserTreatmentPlan);
 router.get("/get-treatmentplan/:userId", getUserTreatmentPlan);
 router.delete("/delete-treatmentplan/:userId/:planId", deleteUserTreatmentPlan);
 router.get("/get-hospital-info/:hospital_id", gethospitalsbyid);
-router.post("/hospital-review/:hospital_id", addreviews);
+router.post("/hospital-review/:user_id/:hospital_id", addreviews);
 router.get("/get-hospital-review/:hospital_id", getaveragerating);
 router.get("/", (req, res) => {
   return res.send("API is working!");

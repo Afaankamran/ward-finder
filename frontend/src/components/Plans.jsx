@@ -7,6 +7,7 @@ const Plans = () => {
   const [medicineName, setMedicineName] = useState("");
   const [quantity, setQuantity] = useState("");
   const [times, setTimes] = useState("");
+  const [notes, setNotes] = useState("");
   const [showForm, setShowForm] = useState(false);
 
   const handleAddPlan = () => {
@@ -20,6 +21,7 @@ const Plans = () => {
       medicine_name: medicineName,
       medicine_quantity: quantity,
       medicine_time: times,
+      notes: notes,
     };
     try {
       const response = await axios.post(
@@ -30,6 +32,7 @@ const Plans = () => {
       setMedicineName("");
       setQuantity("");
       setTimes("");
+      setNotes("");
       setShowForm(false);
       window.location.reload();
     } catch (error) {
@@ -88,6 +91,14 @@ const Plans = () => {
             className="border border-gray-400 p-2 rounded my-2 mr-2"
             value={times}
             onChange={(e) => setTimes(e.target.value)}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Notes"
+            className="border border-gray-400 p-2 rounded my-2 mr-2"
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
             required
           />
           <button

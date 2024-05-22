@@ -44,10 +44,11 @@ const SavePlans = () => {
       <h1 className="text-3xl font-bold mb-4 text-center">Saved Plans</h1>
       <div className="p-3 rounded-lg">
         <div className="flex justify-between py-2 bg-gray-300 rounded-lg mb-3">
-          <div className="w-1/4 font-bold">Medicine Name</div>
-          <div className="w-1/4 font-bold">Quantity</div>
-          <div className="w-1/4 font-bold">Times</div>
-          <div className="w-1/4 font-bold">Actions</div>
+          <div className="w-1/5 font-bold">Medicine Name</div>
+          <div className="w-1/5 font-bold">Quantity</div>
+          <div className="w-1/5 font-bold">Times</div>
+          <div className="w-1/5 font-bold">Notes</div>
+          <div className="w-1/5 font-bold">Actions</div>
         </div>
         {plans.length > 0 ? (
           plans.map((plan, index) => (
@@ -55,10 +56,11 @@ const SavePlans = () => {
               key={plan.treatmentplan_id}
               className="flex justify-between items-center py-2 bg-gray-300 mb-2 rounded-lg"
             >
-              <div className="w-1/4 px-2">{plan.medicine_name}</div>
-              <div className="w-1/4 px-2">{plan.medicine_quantity}</div>
-              <div className="w-1/4 px-2">{plan.medicine_time}</div>
-              <div className="w-1/4 px-2">
+              <div className="w-1/5 px-2">{plan.medicine_name}</div>
+              <div className="w-1/5 px-2">{plan.medicine_quantity}</div>
+              <div className="w-1/5 px-2">{plan.medicine_time}</div>
+              <div className="w-1/5 px-2">{plan.notes}</div>
+              <div className="w-1/5 px-2">
                 <button
                   className="bg-red-600 hover:bg-red-700 text-white font-semibold py-1 px-4 rounded-lg"
                   onClick={() => handleDeletePlan(index)}
