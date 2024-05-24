@@ -43,6 +43,11 @@ const Login = () => {
       }
     }
   };
+  const handleGuestLogin = () => {
+    localStorage.setItem("guest", true);
+    sessionStorage.setItem("user", "Guest");
+    navigate("/dashboard");
+  };
 
   return (
     <div className="p-8">
@@ -92,6 +97,12 @@ const Login = () => {
           Log In
         </button>
       </form>
+      <button
+        onClick={handleGuestLogin}
+        className="w-full bg-red-600 text-white font-semibold py-2 rounded-md hover:bg-red-700 mt-2"
+      >
+        Login as Guest
+      </button>
     </div>
   );
 };

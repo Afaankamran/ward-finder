@@ -13,6 +13,8 @@ const HospitalInfo = () => {
   const [formFeedback, setFormFeedback] = useState("");
   const [error, setError] = useState(null);
 
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
     const fetchFeedbacks = async () => {
       try {
@@ -68,6 +70,13 @@ const HospitalInfo = () => {
     fetchHospitalInfo();
   }, []);
 
+  const handleLeaveFeedback = () => {
+    if (!token) {
+      alert("Please login to leave feedback");
+    } else {
+      setShowForm(!showForm);
+    }
+  };
   return (
     <>
       <div className="flex justify-center pt-32">
@@ -108,7 +117,8 @@ const HospitalInfo = () => {
               <div className="flex justify-center w-full mt-2 py-3">
                 <button
                   className="text-white hover:bg-red-700 text-md font-bold bg-red-600 p-2 px-3 rounded-lg mr-4"
-                  onClick={() => setShowForm(!showForm)}
+                  // onClick={() => setShowForm(!showForm)}
+                  onClick={handleLeaveFeedback}
                 >
                   Leave Feedback
                 </button>

@@ -10,12 +10,22 @@ const Header = () => {
       const response = await axios.get("http://localhost:8000/api/logout", {});
       if (response.data) {
         localStorage.removeItem("token");
+        localStorage.removeItem("userid");
+        localStorage.removeItem("guest");
         sessionStorage.removeItem("user");
+        sessionStorage.removeItem("guest");
         navigate("/login");
       }
     } catch (error) {
       console.error(error);
     }
+  };
+  const token = localStorage.getItem("token");
+  const handleRoute = () => {
+    if (!token) {
+      alert("Please login to leave feedback");
+    }
+    window.scrollTo(0, 0);
   };
   const handleClick = () => {
     window.scrollTo(0, 0);
@@ -36,7 +46,7 @@ const Header = () => {
             <NavLink
               to="/dashboard/plans"
               className="text-red-600 hover:text-red-800 mr-6 text-xl font-bold"
-              onClick={handleClick}
+              onClick={handleRoute}
             >
               Treatment
             </NavLink>

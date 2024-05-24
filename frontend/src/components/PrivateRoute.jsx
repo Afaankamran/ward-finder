@@ -3,9 +3,11 @@ import { Navigate, Outlet } from "react-router-dom";
 
 const PrivateRoute = ({ children }) => {
   const token = localStorage.getItem("token");
-  if (!token) {
+  const isGuest = localStorage.getItem("guest");
+  if (!token && !isGuest) {
     return <Navigate to="/login" replace />;
   }
+
   return children || <Outlet />;
 };
 
